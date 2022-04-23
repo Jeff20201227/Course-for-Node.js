@@ -1,19 +1,18 @@
 {
-  "name": "lesson_2",
+  "name": "lesson_3",
   "version": "1.0.0",
-  "description": "Homework for course Node.js GeekBrains",
+  "description": "Homework for course NodeJs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev:server": "nodemon index.js"
+    "server": "nodemon index.js"
   },
   "dependencies": {
-    "express": "^4.17.2"
-  },
-  "devDependencies": {
+    "express": "^4.17.2",
     "nodemon": "^2.0.15"
   },
+  "devDependencies": {},
   "author": "Jeff",
   "license": "ISC"
 }
