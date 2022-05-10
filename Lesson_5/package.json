@@ -1,0 +1,19 @@
+{
+  "name": "lesson5",
+  "version": "1.0.0",
+  "description": "Homework for course Node.js GeekBrains",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Jeff",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^17.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0"
+  }
+}
