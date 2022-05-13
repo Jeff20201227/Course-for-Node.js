@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="style.css" rel="stylesheet">
+	<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+		integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+		crossorigin="anonymous"></script>
+	<title>Чат</title>
+</head>
+
+<body>
+	<input type="text" id="input" autofocus>
+	<button id="button">Отправить</button>
+	<button id="offBtn">Отключиться</button>
+
+	<div id="messages"></div> <br>
+	<script>
+
+		//;==============<SOCKET ON THE CLIENT SIDE>==========================
+
+
+		const socket = io('localhost:3000'); //;_Данная строчка активирует подключение socket
+		const messageBlock = document.querySelector('#messages');
+		const input = document.querySelector('#input');
+		const button = document.querySelector('#button');
+		const offBtn = document.querySelector('#offBtn');
+
+
+		const random = parseInt(Math.random() * 100);
+		const user = prompt('Введите ваше имя', `user_${random}`);
+
+		if (!user) {
+			user = prompt('Введите ваше имя', `user_${random}`);
+		}
+
+		button.addEventListener('click', () => {
+			console.log(`${user} socket.id: ${socket.id}`);
+
+			const newUser = {
+				nickname: user,
+				message: input.value,
+			};
+
+
+			socket.emit('newUser', newUser);
+			input.value = '';
+			input.focus();
+		});
+
+		socket.on('serverMsg', (serverUserData) => {
+		
+			messageBlock.insertAdjacentHTML('afterbegin', `<div>${serverUserData.nickname}:&nbsp;${serverUserData.message}</div>`);
+		});
+
+
+		socket.on('connect', (serverUserData) => { //; connect - срабатывает после prompt-запроса
+			console.log(`Server from Client ** ${user} ** Side was connected...`);
+			messageBlock.insertAdjacentHTML('afterbegin', `<div>${user}:&nbsp; Вы вошли в чат</div>`);
+			socket.emit('welcome', user);
+			socket.on('total', (userAll) => {
+				messageBlock.insertAdjacentHTML('afterbegin', `<div>${userAll}:&nbsp; Присоединился к чату</div>`);
+			});
+		});
+
+		offBtn.addEventListener('click', () => {
+			console.log(`${user} socket.id: ${socket.id}`);
+			console.log(`Server from Client ** ${user} ** Side was disconnected...`);
+			messageBlock.insertAdjacentHTML('afterbegin', `<div>${user}:&nbsp; Вы вышли из чата</div>`);
+
+			socket.emit('off', user);
+
+		});
+
+
+		socket.on('serverOff', (msg) => {
+			messageBlock.insertAdjacentHTML('afterbegin', `<div>${msg.nickname}:&nbsp;${msg.message}</div>`);
+		});
+
+	</script>
+</body>
+
+</html>

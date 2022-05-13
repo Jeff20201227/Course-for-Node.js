@@ -1,16 +1,18 @@
 {
-  "name": "lesson5",
+  "name": "lesson6",
   "version": "1.0.0",
   "description": "Homework for course Node.js GeekBrains",
-  "main": "index.js",
+  "main": "socket_chat.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node socket_chat.js",
+    "dev": "nodemon socket_chat.js"
   },
   "author": "Jeff",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.5.0",
     "yargs": "^17.3.1"
   },
   "devDependencies": {
